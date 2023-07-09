@@ -2,6 +2,8 @@ from pyceptivecontent.adapter import HTTPAdapter
 from pyceptivecontent.utilities import Utilities
 from pyceptivecontent.document import Document
 
+from typing import Optional
+
 class PyceptiveContent:
     """ 
     A 'frontend' class used to interact with Perceptive Content Integration Server
@@ -22,6 +24,9 @@ class PyceptiveContent:
 
         #disconnect from integration server
         imagenow.disconnect()
+
+    
+    Once :func:`connect` is invoked, various properties will be available to make api calls.
     """
 
     def __init__(self, baseUrl: str, username: str, password: str):
@@ -29,30 +34,60 @@ class PyceptiveContent:
 
         self._buildVersion = None
         self._buildInterface = None
+        self.__utilities = None
+        self.__document = None
 
     @property
-    def buildVersion(self):
+    def isConnected(self) -> bool:
+        """
+        Denotes if :class:`PyceptiveContent` is connected 
+        to the Integration Server
+        """
+        return self.__auth.connected
+    @property
+    def buildVersion(self) -> str:
+        """Intergration Server build version"""
         return self._buildVersion
     
     @property
-    def buildInterface(self):
+    def buildInterface(self) -> str:
+        """Integration Server build interface"""
         return self._buildInterface
         
-    def connect(self):
+    @property
+    def utilities(self) -> Optional[Utilities]:
+        """
+        An class primirally used to assist in other functions
+        such as calling an iScript, getting server status, etc. 
+        """
+        return self.__utilities
+    
+    @property
+    def document(self) -> Optional[Document]:
+        """A class that allows for document manipulation"""
+        return self.__document 
+
+    def connect(self) -> None:
+        """
+        Connects to the Integration Server and retrieves a session token for future calls. 
+        """
         self.__auth.connect()
 
-        self.utilities = Utilities(self.__auth)
+        self.__utilities = Utilities(self.__auth)
         serverData = self.utilities.serverVersion()
         
         self._buildVersion = serverData["buildVersion"]
         self._buildInterface = serverData["interfaceVersion"]
 
 
-        self.document = Document(self.__auth)
+        self.__document = Document(self.__auth)
 
 
-    def disconnect(self):
-        self.__auth.disconnect()
+    def disconnect(self) -> None:
+        """
+        Disconnects to the Integration Server. 
+        """
+        self.__auth.disconnect()        
 
     def __enter__(self):
         self.connect()

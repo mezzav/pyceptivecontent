@@ -1,1 +1,1 @@
-from .pyceptivecontent import PyceptiveContent
+from .client import PyceptiveContent

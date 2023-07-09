@@ -10,11 +10,26 @@ from pathlib import Path
 import os
 
 class Document(PyceptiveContentBase):
+    """
+    A class that is responsible for retriving, updating, delete, and adding 
+    documents to Perceptive Content
+    """
     def __init__(self, auth):
         super().__init__(auth)
 
     @PyceptiveContentBase._required_args(params=["id"])
-    def info(self, *argc, **kwargs):
+    def info(self, *argc, **kwargs) -> DocumentModel:
+        """ 
+        Retrieves information about a specific Perceptive Content document.
+
+        :param id: document ID
+        
+        :raises DocumentNotFoundError: A document with :param:`id` does not exist in the system.
+        :raises InsufficientPrivilegesError: User account authenticated with :class:`PyceptiveContent` does not have the privileges to view the document
+
+        :return: Perceptive Content Document
+        :rtype: DocumentModel
+        """
         response, code, err = self._auth.request(
             method="GET", path=API_PATH["doc_info"].format(id=kwargs["id"])
         )
@@ -31,7 +46,16 @@ class Document(PyceptiveContentBase):
             keys = data["info"]["keys"],
         )
 
-    def signatures(self, document: DocumentModel, version: Union[str, int]) -> List:
+    def signatures(self, document: DocumentModel, version: Union[str, int]) -> List[DocumentSignatureModel]:
+        """
+        Retrieves digital signatures associated with a document.
+
+        :param document: Perceptive Content document model
+        :param version: Denotes where to get all signatures, the latest signature, or signatures in a specific version of the document
+
+        :returns: List of digital signatures
+        :rtype: List[DocumentSignatureModel]
+        """
         if not isinstance(version, str) and not isinstance(version, int):
             raise ValueError(
                 "'version' parameter is not type 'str' or type 'int'")
@@ -59,7 +83,13 @@ class Document(PyceptiveContentBase):
                 for item in response.json()["signatures"] 
             ]
 
-    def export(self, doc: DocumentModel, path: str):
+    def export(self, doc: DocumentModel, path: str) -> None:
+        """
+            Exports a Perceptive Content document.
+
+            :param doc: Perceptive Content document
+            :param path: path to save the document.
+        """
         params = {
             'documentId': doc.id,
             'conversionFormat': 'PDF'
