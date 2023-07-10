@@ -44,6 +44,7 @@ class HTTPAdapter:
             response = self._session.request(
                 method = method,
                 url = urlunparse(url),
+                params = kwargs.get("params"),
                 json = kwargs.get("json"),
                 data = kwargs.get("data"),
                 files = kwargs.get("files")

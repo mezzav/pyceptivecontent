@@ -8,6 +8,7 @@ from typing import Dict, List, Union
 
 from pathlib import Path
 import os
+import copy
 
 class Document(PyceptiveContentBase):
     """
@@ -97,19 +98,15 @@ class Document(PyceptiveContentBase):
 
         tempPath = Path(path)
 
-        # create the directories if it does not exist
-        if not os.path.exists(path):
-            os.makedirs(tempPath.parent)
-
-        auth = self._auth.copy(deep = True)
+        auth = copy.deepcopy(self._auth)
 
         auth.updateHeaders('Accept', 'application/zip')
     
-        response = auth.request(
-            method="GET", path=API_PATH["doc_export"], params=params)
+        response, code, err = auth.request(
+            method="GET", path=API_PATH["doc_export"], params = params)
 
         if not response.ok:
-            pass
+            self.raiseException(code, err)
 
         with open(path, 'wb') as file:
             file.write(response.content)

@@ -6,6 +6,7 @@ import os
 import vcr
 import secrets
 import string
+import zipfile
 
 def generate_random_string(length):
     letters_and_digits = string.ascii_letters + string.digits
@@ -48,3 +49,13 @@ class TestDocument:
         signatures = pyceptivecontent_session.document.signatures(valid_document, version = "ALL")
 
         assert len(signatures) == 0
+
+    @vcr_document.use_cassette("export_document.yaml", serializer = "yaml")
+    def test_export_valid_document(self, pyceptivecontent_session, valid_document, tmpdir):
+
+        file_path = tmpdir.join("doc.zip")
+
+        pyceptivecontent_session.document.export(valid_document, file_path)
+
+        assert file_path.exists() == True
+        
