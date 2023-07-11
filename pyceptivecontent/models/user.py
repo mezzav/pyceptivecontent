@@ -15,7 +15,7 @@ class SystemInfoModel(BaseModel):
     org: Optional[str] = Field(title = "org", description = "The organization of the user")
     orgUnit: Optional[str] = Field(title = "orgUnit", description = "The organization unit of the user")
 
-class IndentityInfo(BaseModel):
+class IdentityInfoModel(BaseModel):
     firstName: Optional[str] = Field(title = "firstName", description = "The first name of the user")
     lastName: Optional[str] = Field(title = "lastName", description = "The last name of the user")
     prefix: Optional[str] = Field(title = "prefix", description = "The prefix of the user")
@@ -32,7 +32,7 @@ class UserModel(BaseModel):
 
     contactInfo: Optional[ContactInfoModel]
     externalSystemInfo: Optional[SystemInfoModel]
-    identityInfo: Optional[IndentityInfo]
+    identityInfo: Optional[IdentityInfoModel]
 
 
 class GroupModel(BaseModel):
