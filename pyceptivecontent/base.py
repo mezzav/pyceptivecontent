@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from pyceptivecontent.exceptions.base import PyceptiveContentException
 from pyceptivecontent.exceptions.document import *
 from pyceptivecontent.exceptions.user import *
+from pyceptivecontent.exceptions.doctype import *
 
 class PyceptiveContentBase(ABC):
     def __init__(self, auth):

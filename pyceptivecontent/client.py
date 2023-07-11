@@ -2,7 +2,7 @@ from pyceptivecontent.adapter import HTTPAdapter
 from pyceptivecontent.utilities import Utilities
 from pyceptivecontent.document import Document
 from pyceptivecontent.user import User
-
+from pyceptivecontent.doctype import DocumentType, DocumentTypeList
 from typing import Optional
 
 class PyceptiveContent:
@@ -73,6 +73,16 @@ class PyceptiveContent:
         "A class that allows for user information retrieval"
         return self.__user
 
+    @property
+    def doctype(self) -> Optional[DocumentType]:
+        "A class that retrieves document type information from Perceptive Content"
+        return self.__doctype
+    
+    @property 
+    def doctypelist(self) -> Optional[DocumentTypeList]:
+        "A class that retrieves document type list information from Perceptive Content"
+        return self.__doctypelist
+
     def connect(self) -> None:
         """
         Connects to the Integration Server and retrieves a session token for future calls. 
@@ -88,6 +98,8 @@ class PyceptiveContent:
 
         self.__document = Document(self.__auth)
         self.__user = User(self.__auth)
+        self.__doctype = DocumentType(self.__auth)
+        self.__doctypelist = DocumentTypeList(self.__auth)
 
 
     def disconnect(self) -> None:

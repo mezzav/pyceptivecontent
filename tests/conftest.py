@@ -59,3 +59,17 @@ def empty_user(pyceptivecontent_session, pytestconfig):
     user = pyceptivecontent_session.user.info(id = id)
 
     yield user
+
+@pytest.fixture(scope = "session")
+def documenttypes(pyceptivecontent_session):
+    
+    doctypes = pyceptivecontent_session.doctype.all()
+
+    yield doctypes
+
+@pytest.fixture(scope = "session")
+def documentypelists(pyceptivecontent_session):
+    
+    doctypes = pyceptivecontent_session.doctypelist.all()
+
+    yield doctypes
