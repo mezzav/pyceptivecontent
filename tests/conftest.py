@@ -43,3 +43,19 @@ def valid_document(pyceptivecontent_session, pytestconfig):
 
     # Yield or return the populated model
     yield doc
+
+@pytest.fixture(scope = "session", autouse = True)
+def valid_user(pyceptivecontent_session, pytestconfig):
+    id = os.getenv("USER_ID")
+
+    user = pyceptivecontent_session.user.info(id = id)
+
+    yield user
+
+@pytest.fixture(scope = "session", autouse = True)
+def empty_user(pyceptivecontent_session, pytestconfig):
+    id = os.getenv("EMPTY_USER_ID")
+
+    user = pyceptivecontent_session.user.info(id = id)
+
+    yield user

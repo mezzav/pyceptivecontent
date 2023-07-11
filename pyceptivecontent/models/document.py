@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, Field, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import List
 from datetime import datetime
 from typing import Optional, Literal
@@ -39,8 +39,8 @@ class DocumentModel(BaseModel):
     name: str = Field(title = "name", description = "Name of the document")
     keys: DocumentKeysModel = Field(title = "keys", description = "Index values representing the document")
     pages: list[PagesModel] = Field(title = "pages", description = "List of pages within the document")
-    properties: list[CustomPropertyModel] = Field(title = "properties", description = "List of custom properties associated with the document", default=None, alias="properties")
-    worklowItems: list[WorkflowItemModel] = Field(title = "workflowItems", description = "List of workflowItems associated with the document", default=None, alias="workflowItems")
+    properties: list[CustomPropertyModel] = Field(title = "properties", description = "List of custom properties associated with the document", alias="properties")
+    worklowItems: list[WorkflowItemModel] = Field(title = "workflowItems", description = "List of workflowItems associated with the document", alias="workflowItems")
 
 
 
@@ -56,7 +56,7 @@ class DocumentSignatureModel(BaseModel):
     creationUsername: str = Field(title = "creationUsername", description = "The username of the digital signature owner")
     creationTime: datetime = Field(title = "creationTime", description = "The time the instance was signed")
 
-    @validator('statusTime', 'creationTime')
+    @field_validator('statusTime', 'creationTime')
     def convert_to_datetime(cls, value):
         """Converts a long (unix epoch time) to a datetime object"""
         return datetime.fromtimestamp(value / 1000)

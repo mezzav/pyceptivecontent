@@ -1,6 +1,7 @@
 from pyceptivecontent.adapter import HTTPAdapter
 from pyceptivecontent.utilities import Utilities
 from pyceptivecontent.document import Document
+from pyceptivecontent.user import User
 
 from typing import Optional
 
@@ -66,6 +67,11 @@ class PyceptiveContent:
     def document(self) -> Optional[Document]:
         """A class that allows for document manipulation"""
         return self.__document 
+    
+    @property
+    def user(self) -> Optional[User]:
+        "A class that allows for user information retrieval"
+        return self.__user
 
     def connect(self) -> None:
         """
@@ -81,6 +87,7 @@ class PyceptiveContent:
 
 
         self.__document = Document(self.__auth)
+        self.__user = User(self.__auth)
 
 
     def disconnect(self) -> None:
