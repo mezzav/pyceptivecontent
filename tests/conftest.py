@@ -3,6 +3,7 @@ from pyceptivecontent import PyceptiveContent
 from dotenv import dotenv_values
 import vcr
 import os
+import random
 
 
 @pytest.fixture(scope = "session")
@@ -73,3 +74,10 @@ def documentypelists(pyceptivecontent_session):
     doctypes = pyceptivecontent_session.doctypelist.all()
 
     yield doctypes
+
+@pytest.fixture( scope = "session")
+def valid_drawer(pyceptivecontent_session):
+
+    drawers = pyceptivecontent_session.drawer.all()
+
+    yield drawers[0]

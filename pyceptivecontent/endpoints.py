@@ -14,5 +14,7 @@ API_PATH = {
     "all_document_types":       "v1/documentType",
     "document_type_info":       "v1/documentType/{id}",
     "all_document_type_lists":  "v1/documentTypeList",
-    "document_type_list_info":  "v1/documentTypeList/{id}"
+    "document_type_list_info":  "v1/documentTypeList/{id}",
+    "all_drawers":              "v1/drawer",
+    "drawer_info":              "v1/drawer/{id}"
 }
