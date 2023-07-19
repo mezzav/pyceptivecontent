@@ -24,6 +24,18 @@ class PyceptiveContentBase(ABC):
             return function_wrapper
         return decorator_func
     
+    @classmethod
+    def _require_any_args(cls, params: list):
+        def decorator_func(func):
+            def function_wrapper(self, *args, **kwargs):
+                param_found = any(param in kwargs for param in params)
+                if not param_found:
+                    raise ValueError(f"At least one of the following parameters must be provided: {', '.join(params)}")
+                return func(self, *args, **kwargs)
+
+            return function_wrapper
+        return decorator_func
+    
     def raiseException(self, code, message):
         for exception_class in PyceptiveContentException.__subclasses__():
             if hasattr(exception_class, 'error_message') and exception_class.error_message in code:
