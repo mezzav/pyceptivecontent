@@ -4,6 +4,7 @@ from pyceptivecontent.document import Document
 from pyceptivecontent.user import User
 from pyceptivecontent.doctype import DocumentType, DocumentTypeList
 from pyceptivecontent.drawer import Drawer
+from pyceptivecontent.capture import Capture
 
 from typing import Optional
 
@@ -89,6 +90,10 @@ class PyceptiveContent:
     def drawer(self) -> Optional[Drawer]:
         return self.__drawer
 
+    @property
+    def capture(self) -> Optional[Capture]:
+        return self.__capture
+    
     def connect(self) -> None:
         """
         Connects to the Integration Server and retrieves a session token for future calls. 
@@ -107,6 +112,7 @@ class PyceptiveContent:
         self.__doctype = DocumentType(self.__auth)
         self.__doctypelist = DocumentTypeList(self.__auth)
         self.__drawer = Drawer(self.__auth)
+        self.__capture = Capture(self.__auth)
 
     def disconnect(self) -> None:
         """

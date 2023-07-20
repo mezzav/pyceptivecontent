@@ -4,6 +4,8 @@ from pyceptivecontent.exceptions.document import *
 from pyceptivecontent.exceptions.user import *
 from pyceptivecontent.exceptions.doctype import *
 from pyceptivecontent.exceptions.drawer import *
+from pyceptivecontent.exceptions.misc import *
+from pyceptivecontent.exceptions.capture import *
 
 class PyceptiveContentBase(ABC):
     def __init__(self, auth):

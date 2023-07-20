@@ -1,4 +1,3 @@
-
 API_PATH = {
     "connect":                          "v2/connection",
     "disconnect":                       "v1/connection",
@@ -21,5 +20,10 @@ API_PATH = {
     "workflow_queue_info":              "v2/workflowQueue/{id}",
     "workflow_queue_forms":             "v2/workflowQueue/{id}/form",
     "workflow_queue_all_routes":        "v2/workflowQueue/{id}/allRoute",
-    "workflow_queue_forward_routes":    "v2/workflowQueue/{id}/forwardRoute"
+    "workflow_queue_forward_routes":    "v2/workflowQueue/{id}/forwardRoute",
+    "capture_profile_all":              "v3/captureProfile",
+    "capture_profile_info":             "v3/captureProfile/{id}",
+    "capture_group_create":             "v1/captureGroup",
+    "capture_group_add":                "v1/captureGroup/{id}/page",
+    "capture_group_close":              "v1/captureGroup/{id}"
 }
