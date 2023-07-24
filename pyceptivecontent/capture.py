@@ -7,7 +7,7 @@ from pyceptivecontent.endpoints import API_PATH
 
 from requests_toolbelt.multipart import encoder
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Union
 import copy
 
 import json
@@ -32,6 +32,12 @@ class CaptureProfile(PyceptiveContentBase):
             captureProfiles.append(CaptureProfileBaseModel(**profile))
 
         return captureProfiles
+
+    def exists(self, name: str, captureProfileType: str) -> Union[CaptureProfileBaseModel, None]:
+        for profile in self.all():
+            if profile.name == name and profile.type == captureProfileType:
+                return profile
+        return None
 
     #@PyceptiveContentBase._required_any_args(params = ["id", "model"])
     def info(self, *argc, **kwargs):
